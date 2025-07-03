@@ -40,26 +40,6 @@ A high-performance Hadoop connector that overrides S3A FileSystem operations to 
 
 6. The JAR file will be created in the `target` directory as `s5cmd-s3a-filesystem-1.0.0.jar`
 
-### Project Structure
-
-The project should have the following structure:
-```
-├── pom.xml
-├── README.md
-└── src
-    └── main
-        ├── java
-        │   └── org
-        │       └── apache
-        │           └── hadoop
-        │               └── fs
-        │                   └── s3a
-        │                       └── custom
-        │                           ├── package-info.java
-        │                           └── S5cmdS3AFileSystem.java
-        └── resources
-```
-
 ### Adding the JAR to Hadoop
 
 Add the JAR to Hadoop's classpath using one of these methods:
