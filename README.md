@@ -16,29 +16,7 @@ A high-performance Hadoop connector that overrides S3A FileSystem operations to 
 
 ### Building the JAR
 
-1. Ensure you have the following prerequisites installed:
-   - Java JDK 8 or later
-   - Apache Maven 3.6.0 or later
-
-2. Clone or download this repository to your local machine
-
-3. Create the proper directory structure for the Java files:
-   ```bash
-   mkdir -p src/main/java/org/apache/hadoop/fs/s3a/custom
-   ```
-
-4. Move the Java files to the appropriate directory:
-   ```bash
-   mv S5cmdS3AFileSystem.java src/main/java/org/apache/hadoop/fs/s3a/custom/
-   mv package-info.java src/main/java/org/apache/hadoop/fs/s3a/custom/
-   ```
-
-5. Compile the code and package it into a JAR file:
-   ```bash
-   mvn clean package
-   ```
-
-6. The JAR file will be created in the `target` directory as `hadoop-s5cmd-connector-1.0.0.jar`
+Follow steps described in [DEVELOPMENT.MD](DEVELOPMENT.MD)
 
 ### Adding the JAR to Hadoop
 
