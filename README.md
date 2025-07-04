@@ -38,7 +38,7 @@ A high-performance Hadoop connector that overrides S3A FileSystem operations to 
    mvn clean package
    ```
 
-6. The JAR file will be created in the `target` directory as `s5cmd-s3a-filesystem-1.0.0.jar`
+6. The JAR file will be created in the `target` directory as `hadoop-s5cmd-connector-1.0.0.jar`
 
 ### Adding the JAR to Hadoop
 
@@ -46,18 +46,18 @@ Add the JAR to Hadoop's classpath using one of these methods:
 
 1. **Copy to Hadoop lib directory**:
    ```bash
-   cp target/s5cmd-s3a-filesystem-1.0.0.jar $HADOOP_HOME/share/hadoop/common/lib/
+   cp target/hadoop-s5cmd-connector-1.0.0.jar $HADOOP_HOME/share/hadoop/common/lib/
    ```
 
 2. **Using the classpath command**:
    ```bash
-   export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/path/to/s5cmd-s3a-filesystem-1.0.0.jar
+   export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/path/to/hadoop-s5cmd-connector-1.0.0.jar
    ```
 
 3. **Add to HDFS and use with -libjars**:
    ```bash
-   hdfs dfs -put target/s5cmd-s3a-filesystem-1.0.0.jar /user/hadoop/lib/
-   hadoop jar your-application.jar -libjars hdfs:///user/hadoop/lib/s5cmd-s3a-filesystem-1.0.0.jar
+   hdfs dfs -put target/hadoop-s5cmd-connector-1.0.0.jar /user/hadoop/lib/
+   hadoop jar your-application.jar -libjars hdfs:///user/hadoop/lib/hadoop-s5cmd-connector-1.0.0.jar
    ```
 
 ## Configuration
@@ -127,7 +127,7 @@ sudo mv /tmp/s5cmd /usr/local/bin/
 sudo chmod +x /usr/local/bin/s5cmd
 
 # Download the custom S3AFileSystem JAR from S3
-sudo aws s3 cp s3://your-bucket/path/to/s5cmd-s3a-filesystem.jar /usr/lib/hadoop/lib/
+sudo aws s3 cp s3://your-bucket/path/to/hadoop-s5cmd-connector.jar /usr/lib/hadoop/lib/
 
 # Create a directory for temporary files with appropriate permissions
 sudo mkdir -p /mnt/s5cmd-tmp
@@ -183,7 +183,7 @@ After your cluster is running, SSH into the master node and verify the installat
 s5cmd version
 
 # Verify the custom JAR is in the classpath
-ls -la /usr/lib/hadoop/lib/s5cmd-s3a-filesystem.jar
+ls -la /usr/lib/hadoop/lib/hadoop-s5cmd-connector.jar
 
 # Test with a simple upload
 hadoop fs -copyFromLocal /etc/hosts s3a://your-bucket/test-file
