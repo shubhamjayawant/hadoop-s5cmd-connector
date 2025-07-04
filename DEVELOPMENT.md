@@ -1,6 +1,4 @@
-# Building the S5cmd S3A FileSystem JAR
-
-This guide provides detailed instructions for building the custom S5cmd S3A FileSystem JAR file.
+# Building Hadoop S5cmd Connector JAR
 
 ## Prerequisites
 
@@ -14,174 +12,33 @@ This guide provides detailed instructions for building the custom S5cmd S3A File
    - Install on Ubuntu: `sudo apt install maven`
    - Install on CentOS/RHEL: `sudo yum install maven`
 
-## Step 1: Set Up Project Structure
+## Step 1: Clone hadoop-s5cmd-connector repository locally
 
-Create the proper directory structure for the project:
-
-```bash
-# Create a new project directory
-mkdir hadoop-s5cmd-connector
-cd hadoop-s5cmd-connector
-
-# Create the directory structure for Java files
-mkdir -p src/main/java/org/apache/hadoop/fs/s3a/custom
+### Option 1: Clone using URL
+- Follow https://github.com/git-guides/install-git to install latest Git CLI for your local development platform.
+- Clone using web URL,
+```
+git clone https://github.com/shubhamjayawant/hadoop-s5cmd-connector.git
 ```
 
-## Step 2: Create Source Files
-
-1. Create the S5cmdS3AFileSystem.java file:
-
-```bash
-# Create the main implementation file
-vi src/main/java/org/apache/hadoop/fs/s3a/custom/S5cmdS3AFileSystem.java
+### Option 2: Clone using GitHub CLI
+- Follow https://cli.github.com/ to install latest GitHub CLI for your local development platform.
+- Clone using GitHub CLI
+```
+gh repo clone shubhamjayawant/hadoop-s5cmd-connector
 ```
 
-Paste the S5cmdS3AFileSystem.java content into this file.
-
-2. Create the package-info.java file:
-
-```bash
-# Create the package info file
-vi src/main/java/org/apache/hadoop/fs/s3a/custom/package-info.java
-```
-
-Paste the following content:
-
-```java
-/**
- * Custom S3A FileSystem implementation that uses s5cmd for improved S3 upload performance.
- * 
- * This package contains a custom implementation of the Hadoop S3AFileSystem that
- * leverages s5cmd for S3 uploads, which can significantly improve performance
- * compared to the default AWS SDK implementation.
- * 
- * To use this implementation, configure Hadoop with:
- * 
- * fs.s3a.impl=org.apache.hadoop.fs.s3a.custom.S5cmdS3AFileSystem
- * fs.s3a.s5cmd.path=/path/to/s5cmd (optional, defaults to "s5cmd" in PATH)
- */
-package org.apache.hadoop.fs.s3a.custom;
-```
-
-## Step 3: Create the Maven POM File
-
-Create a pom.xml file in the root directory:
-
-```bash
-# Create the Maven POM file
-vi pom.xml
-```
-
-Paste the following content:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.example</groupId>
-    <artifactId>hadoop-s5cmd-connector</artifactId>
-    <version>1.0.0</version>
-    <packaging>jar</packaging>
-
-    <name>S5cmd S3A FileSystem</name>
-    <description>Custom S3A FileSystem implementation using s5cmd for improved performance</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hadoop.version>3.3.4</hadoop.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
-    <dependencies>
-        <!-- Hadoop Common -->
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-common</artifactId>
-            <version>${hadoop.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        
-        <!-- Hadoop AWS -->
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-aws</artifactId>
-            <version>${hadoop.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        
-        <!-- SLF4J API -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.36</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <!-- Compiler Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
-            </plugin>
-            
-            <!-- Shade Plugin to create an uber JAR with all dependencies -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.4.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <filters>
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-</project>
-```
-
-## Step 4: Build the JAR
+## Step 2: Build the JAR
 
 Build the project using Maven:
 
 ```bash
-# Build the project
-mvn clean package
+cd hadoop-s5cmd-connector/ && mvn clean package
 ```
 
 After successful build, the JAR file will be available at `target/hadoop-s5cmd-connector-1.0.0.jar`.
 
-## Step 5: Verify the JAR
+## Step 3: Verify the JAR
 
 Verify the contents of the JAR file:
 
@@ -192,28 +49,6 @@ jar tvf target/hadoop-s5cmd-connector-1.0.0.jar | grep S5cmd
 
 You should see the S5cmdS3AFileSystem class listed in the output.
 
-## Step 6: Deploy the JAR
-
-Deploy the JAR file to your Hadoop environment:
-
-### Option 1: Copy to Hadoop lib directory
-
-```bash
-cp target/hadoop-s5cmd-connector-1.0.0.jar $HADOOP_HOME/share/hadoop/common/lib/
-```
-
-### Option 2: Add to classpath
-
-```bash
-export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/path/to/hadoop-s5cmd-connector-1.0.0.jar
-```
-
-### Option 3: Upload to S3 for EMR
-
-```bash
-# Upload to S3 for use with EMR
-aws s3 cp target/hadoop-s5cmd-connector-1.0.0.jar s3://your-bucket/jars/
-```
 
 ## Troubleshooting
 
