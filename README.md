@@ -16,7 +16,7 @@ A high-performance Hadoop connector that overrides S3A FileSystem operations to 
 
 ### Building the JAR
 
-Follow steps described in [DEVELOPMENT.MD](DEVELOPMENT.MD)
+Follow steps described in [DEVELOPMENT.md](DEVELOPMENT.md)
 
 ### Adding the JAR to Hadoop
 
