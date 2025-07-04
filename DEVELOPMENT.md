@@ -20,8 +20,8 @@ Create the proper directory structure for the project:
 
 ```bash
 # Create a new project directory
-mkdir s5cmd-s3a-filesystem
-cd s5cmd-s3a-filesystem
+mkdir hadoop-s5cmd-connector
+cd hadoop-s5cmd-connector
 
 # Create the directory structure for Java files
 mkdir -p src/main/java/org/apache/hadoop/fs/s3a/custom
@@ -82,7 +82,7 @@ Paste the following content:
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>s5cmd-s3a-filesystem</artifactId>
+    <artifactId>hadoop-s5cmd-connector</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -179,7 +179,7 @@ Build the project using Maven:
 mvn clean package
 ```
 
-After successful build, the JAR file will be available at `target/s5cmd-s3a-filesystem-1.0.0.jar`.
+After successful build, the JAR file will be available at `target/hadoop-s5cmd-connector-1.0.0.jar`.
 
 ## Step 5: Verify the JAR
 
@@ -187,7 +187,7 @@ Verify the contents of the JAR file:
 
 ```bash
 # List the contents of the JAR
-jar tvf target/s5cmd-s3a-filesystem-1.0.0.jar | grep S5cmd
+jar tvf target/hadoop-s5cmd-connector-1.0.0.jar | grep S5cmd
 ```
 
 You should see the S5cmdS3AFileSystem class listed in the output.
@@ -199,20 +199,20 @@ Deploy the JAR file to your Hadoop environment:
 ### Option 1: Copy to Hadoop lib directory
 
 ```bash
-cp target/s5cmd-s3a-filesystem-1.0.0.jar $HADOOP_HOME/share/hadoop/common/lib/
+cp target/hadoop-s5cmd-connector-1.0.0.jar $HADOOP_HOME/share/hadoop/common/lib/
 ```
 
 ### Option 2: Add to classpath
 
 ```bash
-export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/path/to/s5cmd-s3a-filesystem-1.0.0.jar
+export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/path/to/hadoop-s5cmd-connector-1.0.0.jar
 ```
 
 ### Option 3: Upload to S3 for EMR
 
 ```bash
 # Upload to S3 for use with EMR
-aws s3 cp target/s5cmd-s3a-filesystem-1.0.0.jar s3://your-bucket/jars/
+aws s3 cp target/hadoop-s5cmd-connector-1.0.0.jar s3://your-bucket/jars/
 ```
 
 ## Troubleshooting
